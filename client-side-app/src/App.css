@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+/* .question { 
+display: flex;
+justify-content: center;
+align-items: center;
+transform: translateY(45vh);
+  
+} */
+#res_div{
+  display: grid;
+ 
+  grid-template-columns: 3fr 1fr ;
+}
+#test , #inner{
+/* height: 8px; */
+line-height: 30px; /* To center it vertically */
+
+/* margin-bottom:5em; */
+
+}
+#test{
+  width: 100vw;
+  background-color: #eee;
+  align-content: center;
+  
+}
+#inner{
+  background-color: green;
+  text-align: center; /* To center it horizontally (if you want) */
+  color: white;
+}
+/* #test::after{
+  content: attr(data-after);
+  align-content: center;
+  transform: translateY(-900%); */
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+/* } */
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
