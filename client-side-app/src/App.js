@@ -277,7 +277,8 @@ function App() {
       {Show(Words)}
 
       <div>
-      {divsWithMoreThanThreechecked.size == 10 && (
+        {/* i removed logic in  "make finial button visible at the end of submir exam" --commit */}
+        {/* so if user didn't select some/ any question still got rank */}
         <button
           type="button"
           id="finish"
@@ -401,7 +402,7 @@ function App() {
           }}
         >
           Finish
-        </button>)}
+        </button>
       </div>
     </div>
   );
