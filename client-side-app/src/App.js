@@ -7,11 +7,16 @@ function App() {
   let [wrong, setwrong] = useState(1); // this is store the correct anwsers
   let [result, setResult] = useState(0); // this is store finial result which is correct + wrong answers
   let [i, setIndex] = useState(0);
+  let [seleced, setSelected] = useState([]);
+  // seleced.length=10;
   let [Words, setWords] = useState([]); // this is to store the requested worlist from server
   // this is credentionals / option data / fetch request option
   let options = {
     method: "GET",
   };
+  let NotChecked = document.querySelectorAll("input:not(:checked)");
+  let Checked = document.querySelectorAll("input:checked");
+  let diff = [];
 
   /**
  * function accept an array and return the build question on it.
@@ -32,7 +37,7 @@ function App() {
           <div id={arr[index].id}></div>
 
           <p>
-            <span>N:{index + 1} </span> {arr[index].word}
+            <span>N:{index + 1} </span> {arr[index].word} is A / An ...??
           </p>
           <section id="selection">
             <input
@@ -82,72 +87,77 @@ function App() {
           <button
             type="button"
             onClick={() => {
-            
               // this is to prevent resubmit the question and avoid recalc question degree / mark
-              // this like adding disabled to this button 
-              if(document.getElementById(`${arr[index].id}`).innerText===""){
-              let v = document.querySelector(
-                `input[name=${arr[index].word}]:checked`
-              ).value;
-              // var radio = document.querySelector(
-              //   `input[name=${arr[index].word}]:checked`
-              // );
-              const uncheckedRadios = document.querySelectorAll(
-                `input:not(:checked)[data-un="${arr[index].id}"]`
-              );
-              uncheckedRadios.forEach((radio) => {
-                radio.disabled = true;
-              });
+              // this like adding disabled to this button
+              if (
+                document.getElementById(`${arr[index].id}`).innerText === ""
+              ) {
+                let v = document.querySelector(
+                  `input[name=${arr[index].word}]:checked`
+                ).value;
+                document
+                  .querySelector(`input[name=${arr[index].word}]:checked`)
+                  .closest("div").style.backgroundColor = "white !important";
+                // var radio = document.querySelector(
+                //   `input[name=${arr[index].word}]:checked`
+                // );
+                const uncheckedRadios = document.querySelectorAll(
+                  `input:not(:checked)[data-un="${arr[index].id}"]`
+                );
+                uncheckedRadios.forEach((radio) => {
+                  radio.disabled = true;
+                });
 
-              if (v === arr[index].pos) {
-                setCorrect((l) => l + 1);
-                document.getElementById("inner").style.backgroundColor = "blue";
-                document.getElementById("inner").style.width =
-                  correct === 1 && wrong === 1
-                    ? "10vw"
-                    : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                document.getElementById(`${arr[index].id}`).innerText =
-                  "Correct";
-                document.getElementById(
-                  `${arr[index].id}`
-                ).style.backgroundColor = "green";
-                document.getElementById(`${arr[index].id}`).style.color =
-                  "white";
-                document.getElementById("inner").innerText =
-                  correct === 1 && wrong === 1
-                    ? "10%"
-                    : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
-              } else {
-                setwrong((l) => l + 1);
-                document.getElementById("inner").style.backgroundColor = "blue";
+                if (v === arr[index].pos) {
+                  setCorrect((l) => l + 1);
+                  document.getElementById("inner").style.backgroundColor =
+                    "blue";
+                  document.getElementById("inner").style.width =
+                    correct === 1 && wrong === 1
+                      ? "10vw"
+                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+                  document.getElementById(`${arr[index].id}`).innerText =
+                    "Correct";
+                  document.getElementById(
+                    `${arr[index].id}`
+                  ).style.backgroundColor = "green";
+                  document.getElementById(`${arr[index].id}`).style.color =
+                    "white";
+                  document.getElementById("inner").innerText =
+                    correct === 1 && wrong === 1
+                      ? "10%"
+                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+                } else {
+                  setwrong((l) => l + 1);
+                  document.getElementById("inner").style.backgroundColor =
+                    "blue";
 
-                document.getElementById("inner").style.width =
-                  correct === 1 && wrong === 1
-                    ? "10vw"
-                    : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                document.getElementById("inner").innerText =
-                  correct === 1 && wrong === 1
-                    ? "10%"
-                    : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+                  document.getElementById("inner").style.width =
+                    correct === 1 && wrong === 1
+                      ? "10vw"
+                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+                  document.getElementById("inner").innerText =
+                    correct === 1 && wrong === 1
+                      ? "10%"
+                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
 
-                document.getElementById(`${arr[index].id}`).innerText = "Wrong";
-                document.getElementById(
-                  `${arr[index].id}`
-                ).style.backgroundColor = "red";
-                document.getElementById(`${arr[index].id}`).style.color =
-                  "white";
+                  document.getElementById(`${arr[index].id}`).innerText =
+                    "Wrong";
+                  document.getElementById(
+                    `${arr[index].id}`
+                  ).style.backgroundColor = "red";
+                  document.getElementById(`${arr[index].id}`).style.color =
+                    "white";
 
-                document.querySelector(
-                  `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
-                ).style.backgroundColor = "green";
-                document.querySelector(
-                  `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
-                ).style.color = "white";
+                  document.querySelector(
+                    `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
+                  ).style.backgroundColor = "green";
+                  document.querySelector(
+                    `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
+                  ).style.color = "white";
+                }
               }
-            }
-          
-          }}
-         
+            }}
           >
             submit
           </button>
@@ -209,15 +219,24 @@ function App() {
         {result !== 0 && (
           <div id="res_div">
             <h1 id="result">your rank is : {result.rank.toFixed(2)}</h1>
-            <button onClick={()=>{
-              WordList();
-              Show(Words);
-              setResult((e)=>e=0)
-              setCorrect((i)=>i=0)
-              setwrong((x)=>x=0)
-            }}>Try Again</button>
-            </div>
+            <button
+              onClick={() => {
+                document.location.reload();
+                // document.location.reload();
+                WordList();
+                Show(Words);
+                setResult((e) => (e = 0));
+                setCorrect((i) => (i = 1));
+                setwrong((x) => (x = 1));
+              }}
+            >
+              Try Again
+            </button>
+          </div>
         )}
+
+        <h1 id="NotCom"></h1>
+
         <div id="test" data-after="">
           {/* below to display progress percent based on answered questions divided by question total*/}
           <div id="inner"></div>
@@ -232,8 +251,10 @@ function App() {
           id="finish"
           onClick={() => {
             // if (result == 0) {
-            console.log("this is correct " + correct);
-            console.log("this is wrong " + wrong);
+            // console.log("this is correct " + correct);
+            // console.log("this is wrong " + wrong);
+            // let NotChecked = document.querySelectorAll("input:not(:checked)");
+            // let Checked = document.querySelectorAll("input:checked");
             // calculate the score based on correct an wrong answers
             let score = { number: (correct - wrong + 1) * 10 };
             // this is credentionals / fetch options / fetch description
@@ -254,7 +275,7 @@ function App() {
             let send = async () => {
               await fetch("http://localhost:3001/rank", opt)
                 .then((response) => response.json())
-                // after returning thr rank store it in result variable 
+                // after returning thr rank store it in result variable
                 // using setResult function to enable access and update result value
                 .then((response) => {
                   setResult(response);
@@ -263,7 +284,26 @@ function App() {
                 .catch((err) => console.error(err));
             };
             // call the function
-            send();
+            // let c = document.querySelectorAll("input:not(:checked)");
+            diff = Checked.filter((x) => !NotChecked.includes(x));
+
+            Math.trunc(NotChecked.length / 4) === 0
+              ? send()
+              : diff.forEach((e) => {
+                  let z = [];
+                  z.push(e.closest("div"));
+                  // z=z/4;
+                  setSelected((x) => [...new Set([...x, z])]);
+
+                  if (Math.trunc(NotChecked.length / 4) !== 0) {
+                    e.closest("div").style.backgroundColor = "rgb(255, 77, 77)";
+                  } else {
+                    e.closest("div").style.backgroundColor = "white";
+                  }
+                });
+            console.log(Checked[0].closest("div"));
+            document.getElementById("NotCom").innerText =
+              "Please Complete Your Exam";
 
             function scrollToTop() {
               window.scrollTo({
@@ -282,6 +322,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -34,6 +35,24 @@ align-items: center;
 transform: translateY(45vh);
   
 } */
+.question button {
+  padding: 9px;
+  margin-top: 18px;
+  margin-bottom: 16px;
+}
+section#selection label {
+  float: left;
+  transform: translateX(57em);
+}
+section#selection input {
+  transform: translateX(67em);
+  float: left;
+}
+.question label, .question input {
+  /* position: absolute;
+  padding-left: 36px;
+  transform: translateX(-38px); */
+}
 #res_div{
   display: grid;
  
