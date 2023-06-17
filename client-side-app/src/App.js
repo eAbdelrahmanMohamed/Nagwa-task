@@ -277,6 +277,7 @@ function App() {
       {Show(Words)}
 
       <div>
+      {divsWithMoreThanThreechecked.size == 10 && (
         <button
           type="button"
           id="finish"
@@ -400,7 +401,7 @@ function App() {
           }}
         >
           Finish
-        </button>
+        </button>)}
       </div>
     </div>
   );
