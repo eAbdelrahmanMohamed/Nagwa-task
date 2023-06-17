@@ -14,8 +14,12 @@ function App() {
   let options = {
     method: "GET",
   };
-  let NotChecked = document.querySelectorAll("input:not(:checked)");
-  let Checked = document.querySelectorAll("input:checked");
+  let NotChecked = Object.keys(
+    document.querySelectorAll("input:not(:checked)")
+  );
+  let divsWithMoreThanThreeUnchecked=null;
+  let divsWithMoreThanThreechecked=null;
+  let Checked = Object.keys(document.querySelectorAll("input:checked"));
   let diff = [];
 
   /**
@@ -92,70 +96,97 @@ function App() {
               if (
                 document.getElementById(`${arr[index].id}`).innerText === ""
               ) {
-                let v = document.querySelector(
+                let v = "";
+                if (
+                  document.querySelector(
+                    `input[name=${arr[index].word}]:checked`
+                  ) !== null
+                ) {
+                  v = document.querySelector(
+                    `input[name=${arr[index].word}]:checked`
+                  ).value;
+                  document
+                    .querySelector(`input[name=${arr[index].word}]:checked`)
+                    .closest("div").style.backgroundColor = "white";
+                }
+                // else {
+                //   document.getElementById(`${arr[index].id}`).innerText =
+                //     "Please Select An Option";
+                //   document.getElementById(`${arr[index].id}`).style.color =
+                //     "white";
+                //   document.getElementById(
+                //     `${arr[index].id}`
+                //   ).style.backgroundColor = "red";
+                // }
+
+                var radio = document.querySelector(
                   `input[name=${arr[index].word}]:checked`
-                ).value;
-                document
-                  .querySelector(`input[name=${arr[index].word}]:checked`)
-                  .closest("div").style.backgroundColor = "white !important";
-                // var radio = document.querySelector(
-                //   `input[name=${arr[index].word}]:checked`
-                // );
+                );
                 const uncheckedRadios = document.querySelectorAll(
                   `input:not(:checked)[data-un="${arr[index].id}"]`
                 );
                 uncheckedRadios.forEach((radio) => {
                   radio.disabled = true;
                 });
+                if (v !== null) {
+                  if (v === arr[index].pos) {
+                    setCorrect((l) => l + 1);
+                    document.getElementById("inner").style.backgroundColor =
+                      "blue";
+                    document.getElementById("inner").style.width =
+                      correct === 1 && wrong === 1
+                        ? "10vw"
+                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+                    document.getElementById(`${arr[index].id}`).innerText =
+                      "Correct";
+                    document.getElementById(
+                      `${arr[index].id}`
+                    ).style.backgroundColor = "green";
+                    document.getElementById(`${arr[index].id}`).style.color =
+                      "white";
+                    document.getElementById("inner").innerText =
+                      correct === 1 && wrong === 1
+                        ? "10%"
+                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+                  } else {
+                    setwrong((l) => l + 1);
+                    document.getElementById("inner").style.backgroundColor =
+                      "blue";
 
-                if (v === arr[index].pos) {
-                  setCorrect((l) => l + 1);
-                  document.getElementById("inner").style.backgroundColor =
-                    "blue";
-                  document.getElementById("inner").style.width =
-                    correct === 1 && wrong === 1
-                      ? "10vw"
-                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                  document.getElementById(`${arr[index].id}`).innerText =
-                    "Correct";
-                  document.getElementById(
-                    `${arr[index].id}`
-                  ).style.backgroundColor = "green";
-                  document.getElementById(`${arr[index].id}`).style.color =
-                    "white";
-                  document.getElementById("inner").innerText =
-                    correct === 1 && wrong === 1
-                      ? "10%"
-                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
-                } else {
-                  setwrong((l) => l + 1);
-                  document.getElementById("inner").style.backgroundColor =
-                    "blue";
+                    document.getElementById("inner").style.width =
+                      correct === 1 && wrong === 1
+                        ? "10vw"
+                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+                    document.getElementById("inner").innerText =
+                      correct === 1 && wrong === 1
+                        ? "10%"
+                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
 
-                  document.getElementById("inner").style.width =
-                    correct === 1 && wrong === 1
-                      ? "10vw"
-                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                  document.getElementById("inner").innerText =
-                    correct === 1 && wrong === 1
-                      ? "10%"
-                      : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+                    document.getElementById(`${arr[index].id}`).innerText =
+                      "Wrong";
+                    document.getElementById(
+                      `${arr[index].id}`
+                    ).style.backgroundColor = "red";
+                    document.getElementById(`${arr[index].id}`).style.color =
+                      "white";
 
-                  document.getElementById(`${arr[index].id}`).innerText =
-                    "Wrong";
-                  document.getElementById(
-                    `${arr[index].id}`
-                  ).style.backgroundColor = "red";
-                  document.getElementById(`${arr[index].id}`).style.color =
-                    "white";
-
-                  document.querySelector(
-                    `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
-                  ).style.backgroundColor = "green";
-                  document.querySelector(
-                    `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
-                  ).style.color = "white";
+                    document.querySelector(
+                      `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
+                    ).style.backgroundColor = "green";
+                    document.querySelector(
+                      `label[value="${arr[index].pos}"][data-id="${arr[index].id}"]`
+                    ).style.color = "white";
+                  }
                 }
+                //  else {
+                //   document.getElementById(`${arr[index].id}`).innerText =
+                //     "Please Select An Option";
+                //   document.getElementById(`${arr[index].id}`).style.color =
+                //     "white";
+                //   document.getElementById(
+                //     `${arr[index].id}`
+                //   ).style.backgroundColor = "red";
+                // }
               }
             }}
           >
@@ -286,24 +317,76 @@ function App() {
             // call the function
             // let c = document.querySelectorAll("input:not(:checked)");
             diff = Checked.filter((x) => !NotChecked.includes(x));
+            // Select all div elements that contain radio buttons
+            const divsWithRadioButtons = document.querySelectorAll(
+              'div input[type="radio"]'
+            );
+            // const divsWithRadioButtons2 = document.querySelectorAll(
+            //   'div input[type="radio"]'
+            // );
 
-            Math.trunc(NotChecked.length / 4) === 0
-              ? send()
-              : diff.forEach((e) => {
-                  let z = [];
-                  z.push(e.closest("div"));
-                  // z=z/4;
-                  setSelected((x) => [...new Set([...x, z])]);
-
-                  if (Math.trunc(NotChecked.length / 4) !== 0) {
-                    e.closest("div").style.backgroundColor = "rgb(255, 77, 77)";
-                  } else {
-                    e.closest("div").style.backgroundColor = "white";
-                  }
-                });
-            console.log(Checked[0].closest("div"));
-            document.getElementById("NotCom").innerText =
+            // Filter the div elements based on the number of unchecked radio buttons
+            divsWithMoreThanThreeUnchecked = Array.from(
+              divsWithRadioButtons
+            )
+              .filter((radio) => {
+                return !radio.checked;
+              })
+              .reduce((divs, radio) => {
+                const div = radio.closest("div");
+                if (div) {
+                  divs.add(div);
+                }
+                return divs;
+              }, new Set());
+             divsWithMoreThanThreechecked = Array.from(
+              divsWithRadioButtons
+            )
+              .filter((radio) => {
+                return radio.disabled;
+              })
+              .reduce((divs, radio) => {
+                const div = radio.closest("div");
+                if (div) {
+                  divs.add(div);
+                }
+                return divs;
+              }, new Set());
+            // Perform actions on the selected div elements
+            // divsWithMoreThanThreeUnchecked.forEach((div) => {
+            //   div.style.backgroundColor = "red";
+            //   // ...
+            // });
+            // Math.trunc(NotChecked.length / 4)
+            if (divsWithMoreThanThreechecked.size == 10) {
+              document.getElementById("NotCom").style.display ="none";
+              send();
+            } else {
+              // divsWithMoreThanThreechecked.forEach((d) => {
+              //   d.style.backgroundColor = "white";
+              // });
+              // divsWithMoreThanThreeUnchecked.forEach((div) => {
+              //   div.style.backgroundColor = "rgb(255, 77, 77)";
+              // });
+              document.getElementById("NotCom").innerText =
               "Please Complete Your Exam";
+            }
+            // ?
+            // : // diff.forEach((e) => {
+            //     let z = [];
+            //     z.push(e.closest("div"));
+            //     // z=z/4;
+            //     setSelected((x) => [...new Set([...x, z])]);
+
+            //     if (Math.trunc(NotChecked.length / 4) != 0) {
+            //       e.closest("div").style.backgroundColor = "rgb(255, 77, 77)";
+            //     } else {
+            //       e.closest("div").style.backgroundColor = "white";
+            //     }
+            //   })
+
+            console.log(divsWithMoreThanThreechecked.size);
+           
 
             function scrollToTop() {
               window.scrollTo({
