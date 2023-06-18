@@ -1,4 +1,7 @@
 import "./App.css";
+import Show2 from "./main";
+import WordFun from "./Words";
+import Display from "./display";
 // import hoooks to store the data and to run functions on load
 import { useState, useEffect } from "react";
 
@@ -424,6 +427,10 @@ function App() {
           </button>
         )}
       </div>
+      <button onClick={()=>Show2()}>Test Main</button>
+      <button onClick={()=> WordFun()}>Test Words</button>
+      <button onClick={()=>Display(WordFun())}>Test Display</button>
+
     </div>
   );
 }
