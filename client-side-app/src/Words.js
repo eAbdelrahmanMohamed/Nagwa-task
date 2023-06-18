@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+var i = [];
 
 async function WordFun() {
   //   let [Words, setWords] = useState([]); // this is to store the requested worlist from server
@@ -32,12 +33,27 @@ async function WordFun() {
   //   return WordFun().then((res)=>json=res); //do here wathever with
   //   WordList();
   // return WordList();
+  // WordFun().then((res) => i=res)
 }
-async function Handle() {
-   let test = await WordFun().then((res) => res);
-  console.log(test)
-  
-     return test;
+// function getWords(variable) {
+//   // let [variable,setTest]=useState([]);
+//   return variable;
+// }
+function SetWords(value) {
+  // var [x,setTest]=useState([]);
+  // value=getWords(value);
+  // setTest(value);
+  i = value;
+  return i;
+}
+function Handle() {
+  WordFun().then((res) => {
+    // i=res;
+    SetWords(res);
 
+    //   console.log(i)
+    //   return res;
+    console.log(i);
+  });
 }
-export default Handle;
+export default WordFun;

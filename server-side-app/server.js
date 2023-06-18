@@ -49,6 +49,7 @@ function SetResponse(d){
   // if result contains 10 items then return
   // else repeat the process until it has 10 items
   if(result.length == 10){
+    console.log(result);
     return result;
   }
   else{

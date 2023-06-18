@@ -11,6 +11,9 @@ function App() {
   let [result, setResult] = useState(0); // this is store finial result which is correct + wrong answers
   let [i, setIndex] = useState(1);
   let [seleced, setSelected] = useState([]);
+  let [Test, setTest] = useState([]);
+  // WordFun().then((res) =>setTest(res))
+
   // seleced.length=10;
   let [Words, setWords] = useState([]); // this is to store the requested worlist from server
   // this is credentionals / option data / fetch request option
@@ -239,7 +242,7 @@ function App() {
       );
       return divBlocks;
     } else {
-      console.log("else "  + Words[index]);
+      console.log("else " + Words[index]);
     }
     //   );
     // });
@@ -268,6 +271,7 @@ function App() {
   useEffect(() => {
     return () => {
       WordList();
+      WordFun().then((res) => setTest(res));
     };
   }, []);
 
@@ -427,10 +431,56 @@ function App() {
           </button>
         )}
       </div>
-      <button onClick={()=>Show2()}>Test Main</button>
-      <button onClick={()=> WordFun()}>Test Words</button>
-      <button onClick={()=>Display(WordFun())}>Test Display</button>
-
+      <div id="abdo"></div>
+      <button onClick={() => Show2()}>Test Main</button>
+      <button onClick={() => console.log(Test)}>Test Words</button>
+      <button
+        onClick={() => {
+          document.getElementById("abdo").innerHTML = Display(Test, 1);
+        }}
+      >
+        Test Display
+      </button>
+      <button
+        onClick={() => {
+          document.getElementById("abdo").innerHTML = Display(Test, i);
+          setIndex((x) => x + 1);
+        }}
+      >
+        Next
+      </button>
+      {/* <button
+           type="button"
+           onClick={() => {
+             // document
+             //   .querySelector('input[name="option"]:checked')
+             //   .removeAttribute("checked");
+             var radio = document.querySelector(
+               `input[name=${Words[index].word}]:checked`
+             );
+             // radio.checked = false;
+             // index++;
+             if (
+               document.getElementById(`${Words[index].id}`).innerText == "" ||
+               document.getElementById(`${Words[index].id}`).innerText ==
+                 "Please Select An Option"
+             ) {
+               document.getElementById(`${Words[index].id}`).innerText = "";
+               document.getElementById(`${Words[index].id}`).innerText =
+                 "Please Select An Option";
+             } else {
+               console.log("next should run");
+               setIndex((ind) => ind + 1);
+               console.log("next should run after set index" + i);
+               document.getElementById("Show").innerHTML = JSON.parse(Show(i));
+               console.log("next should run after show" + i);
+     
+               // Show(i);
+             }
+           }}
+         >
+           Next
+         </button> */}
     </div>
   );
 }
