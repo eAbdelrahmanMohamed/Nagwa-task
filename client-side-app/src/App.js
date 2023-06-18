@@ -1,5 +1,5 @@
 import "./App.css";
-import Show2 from "./main";
+import Logic from "./main";
 import WordFun from "./Words";
 import Display from "./display";
 // import hoooks to store the data and to run functions on load
@@ -99,109 +99,111 @@ function App() {
             <br />
           </section>
           <button
+          id="submit-btn"
             type="button"
-            onClick={() => {
-              // this is to prevent resubmit the question and avoid recalc question degree / mark
-              // this like adding disabled to this button
-              if (
-                document.getElementById(`${Words[index].id}`).innerText ===
-                  "" ||
-                document.getElementById(`${Words[index].id}`).innerText ===
-                  "Please Select An Option"
-              ) {
-                let v = "";
-                if (
-                  document.querySelector(
-                    `input[name=${Words[index].word}]:checked`
-                  ) !== null
-                ) {
-                  v = document.querySelector(
-                    `input[name=${Words[index].word}]:checked`
-                  ).value;
-                  document
-                    .querySelector(`input[name=${Words[index].word}]:checked`)
-                    .closest("div").style.backgroundColor = "white";
-                }
-                // else {
-                //   document.getElementById(`${Words[index].id}`).innerText =
-                //     "Please Select An Option";
-                //   document.getElementById(`${Words[index].id}`).style.color =
-                //     "white";
-                //   document.getElementById(
-                //     `${Words[index].id}`
-                //   ).style.backgroundColor = "red";
-                // }
+            // onClick={() => {
+            //   // this is to prevent resubmit the question and avoid recalc question degree / mark
+            //   // this like adding disabled to this button
+            //   if (
+            //     document.getElementById(`${Words[index].id}`).innerText ===
+            //       "" ||
+            //     document.getElementById(`${Words[index].id}`).innerText ===
+            //       "Please Select An Option"
+            //   ) {
+            //     let v = "";
+            //     if (
+            //       document.querySelector(
+            //         `input[name=${Words[index].word}]:checked`
+            //       ) !== null
+            //     ) {
+            //       v = document.querySelector(
+            //         `input[name=${Words[index].word}]:checked`
+            //       ).value;
+            //       document
+            //         .querySelector(`input[name=${Words[index].word}]:checked`)
+            //         .closest("div").style.backgroundColor = "white";
+            //     }
+            //     // else {
+            //     //   document.getElementById(`${Words[index].id}`).innerText =
+            //     //     "Please Select An Option";
+            //     //   document.getElementById(`${Words[index].id}`).style.color =
+            //     //     "white";
+            //     //   document.getElementById(
+            //     //     `${Words[index].id}`
+            //     //   ).style.backgroundColor = "red";
+            //     // }
 
-                var radio = document.querySelector(
-                  `input[name=${Words[index].word}]:checked`
-                );
-                const uncheckedRadios = document.querySelectorAll(
-                  `input:not(:checked)[data-un="${Words[index].id}"]`
-                );
-                uncheckedRadios.forEach((radio) => {
-                  radio.disabled = true;
-                });
-                if (v !== null) {
-                  if (v === Words[index].pos) {
-                    setCorrect((l) => l + 1);
-                    document.getElementById("inner").style.backgroundColor =
-                      "blue";
-                    document.getElementById("inner").style.width =
-                      correct === 1 && wrong === 1
-                        ? "10vw"
-                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                    document.getElementById(`${Words[index].id}`).innerText =
-                      "Correct";
-                    document.getElementById(
-                      `${Words[index].id}`
-                    ).style.backgroundColor = "green";
-                    document.getElementById(`${Words[index].id}`).style.color =
-                      "white";
-                    document.getElementById("inner").innerText =
-                      correct === 1 && wrong === 1
-                        ? "10%"
-                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
-                  } else {
-                    setwrong((l) => l + 1);
-                    document.getElementById("inner").style.backgroundColor =
-                      "blue";
+            //     var radio = document.querySelector(
+            //       `input[name=${Words[index].word}]:checked`
+            //     );
+            //     const uncheckedRadios = document.querySelectorAll(
+            //       `input:not(:checked)[data-un="${Words[index].id}"]`
+            //     );
+            //     uncheckedRadios.forEach((radio) => {
+            //       radio.disabled = true;
+            //     });
+            //     if (v !== null) {
+            //       if (v === Words[index].pos) {
+            //         setCorrect((l) => l + 1);
+            //         document.getElementById("inner").style.backgroundColor =
+            //           "blue";
+            //         document.getElementById("inner").style.width =
+            //           correct === 1 && wrong === 1
+            //             ? "10vw"
+            //             : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+            //         document.getElementById(`${Words[index].id}`).innerText =
+            //           "Correct";
+            //         document.getElementById(
+            //           `${Words[index].id}`
+            //         ).style.backgroundColor = "green";
+            //         document.getElementById(`${Words[index].id}`).style.color =
+            //           "white";
+            //         document.getElementById("inner").innerText =
+            //           correct === 1 && wrong === 1
+            //             ? "10%"
+            //             : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+            //       } else {
+            //         setwrong((l) => l + 1);
+            //         document.getElementById("inner").style.backgroundColor =
+            //           "blue";
 
-                    document.getElementById("inner").style.width =
-                      correct === 1 && wrong === 1
-                        ? "10vw"
-                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
-                    document.getElementById("inner").innerText =
-                      correct === 1 && wrong === 1
-                        ? "10%"
-                        : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
+            //         document.getElementById("inner").style.width =
+            //           correct === 1 && wrong === 1
+            //             ? "10vw"
+            //             : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "vw";
+            //         document.getElementById("inner").innerText =
+            //           correct === 1 && wrong === 1
+            //             ? "10%"
+            //             : (parseInt(correct) + parseInt(wrong) - 1) * 10 + "%";
 
-                    document.getElementById(`${Words[index].id}`).innerText =
-                      "Wrong";
-                    document.getElementById(
-                      `${Words[index].id}`
-                    ).style.backgroundColor = "red";
-                    document.getElementById(`${Words[index].id}`).style.color =
-                      "white";
+            //         document.getElementById(`${Words[index].id}`).innerText =
+            //           "Wrong";
+            //         document.getElementById(
+            //           `${Words[index].id}`
+            //         ).style.backgroundColor = "red";
+            //         document.getElementById(`${Words[index].id}`).style.color =
+            //           "white";
 
-                    document.querySelector(
-                      `label[value="${Words[index].pos}"][data-id="${Words[index].id}"]`
-                    ).style.backgroundColor = "green";
-                    document.querySelector(
-                      `label[value="${Words[index].pos}"][data-id="${Words[index].id}"]`
-                    ).style.color = "white";
-                  }
-                }
-                //  else {
-                //   document.getElementById(`${Words[index].id}`).innerText =
-                //     "Please Select An Option";
-                //   document.getElementById(`${Words[index].id}`).style.color =
-                //     "white";
-                //   document.getElementById(
-                //     `${Words[index].id}`
-                //   ).style.backgroundColor = "red";
-                // }
-              }
-            }}
+            //         document.querySelector(
+            //           `label[value="${Words[index].pos}"][data-id="${Words[index].id}"]`
+            //         ).style.backgroundColor = "green";
+            //         document.querySelector(
+            //           `label[value="${Words[index].pos}"][data-id="${Words[index].id}"]`
+            //         ).style.color = "white";
+            //       }
+            //     }
+            //     //  else {
+            //     //   document.getElementById(`${Words[index].id}`).innerText =
+            //     //     "Please Select An Option";
+            //     //   document.getElementById(`${Words[index].id}`).style.color =
+            //     //     "white";
+            //     //   document.getElementById(
+            //     //     `${Words[index].id}`
+            //     //   ).style.backgroundColor = "red";
+            //     // }
+            //   }
+            // }}
+            onClick={()=>Logic(Test,i)}
           >
             submit
           </button>
@@ -238,6 +240,8 @@ function App() {
           >
             Next
           </button>
+      <div id="abdo" data-word={Words[index].word} data-word-id={Words[index].id} ></div>
+
         </div>
       );
       return divBlocks;
@@ -431,8 +435,7 @@ function App() {
           </button>
         )}
       </div>
-      <div id="abdo"></div>
-      <button onClick={() => Show2()}>Test Main</button>
+      <button>Test Main</button>
       <button onClick={() => console.log(Test)}>Test Words</button>
       <button
         onClick={() => {
@@ -481,6 +484,7 @@ function App() {
          >
            Next
          </button> */}
+         <script src="./logic.js"></script>
     </div>
   );
 }

@@ -3,9 +3,11 @@ function Display(Words, index) {
   console.log(Words);
   return (
    ` <div className="question">
+   <div id="abdo" data-word=${Words} data-word-id=${Words[index].id} ></div>
+
       <div id=${Words[index].id}></div>
 
-      <p>
+      <p id=${Words[index].word}>
         <span>N:${index + 1} </span> ${Words[index].word} is A / An ...??
       </p>
       <section id="selection">
